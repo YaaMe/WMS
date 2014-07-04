@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+	<table name="users" schema="dbo" catalog="WMS"
+		class="database.User">
+		<primary-key>
+			<generator class="assigned"></generator>
+		</primary-key>
+	</table>
+	<table name="cargo" schema="dbo" catalog="WMS"
+		class="database.Cargo">
+		<primary-key>
+			<generator class="assigned"></generator>
+		</primary-key>
+	</table>
+	<table name="cargoin" schema="dbo" catalog="WMS"
+		class="database.Cargoin">
+		<primary-key>
+			<generator class="assigned"></generator>
+		</primary-key>
+	</table>
+	<table name="cargomoving" schema="dbo" catalog="WMS"
+		class="database.Cargomoving">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+	<table name="cargorecord" schema="dbo" catalog="WMS"
+		class="database.Cargorecord">
+		<primary-key>
+			<generator class="assigned"></generator>
+		</primary-key>
+	</table>
+	<table name="cargout" schema="dbo" catalog="WMS"
+		class="database.Cargout">
+		<primary-key>
+			<generator class="assigned"></generator>
+		</primary-key>
+	</table>
+<table name="warehousestate" schema="dbo" catalog="WMS"
+	class="database.Warehousestate">
+	<primary-key>
+		<generator class="assigned"></generator>
+	</primary-key>
+</table>
+</hibernate-reverse-engineering>

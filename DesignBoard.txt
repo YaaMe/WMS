@@ -1,0 +1,55 @@
+
+
+Login		login.jsp
+			  =>form:id,password		
+	身份鉴别	=>loginservlet{action:login.do}	<=	[user]
+				  (success=>url:admin.jsp||checker.jsp)(failed=>login.jsp)
+					case:admin.jsp
+							checkcargoin.jsp				<=	cargorecord//it's a table			view vcheckin 待入库货物单
+
+							cargointable.jsp	//it's a form
+							  =>form:cargo_id,trackingno,intime,inerid,
+							  		 area,row,shelf,seat,state,
+							  		 checkerid,getime,kg,isintact,remark
+							  	=>cargoinservlet{action:cargoin.do}			=>	cargoin
+							    (success=>url:successin.jsp=>admin.jsp)
+							    (failed =>url:failedin.jsp =>admin.jsp)
+
+							cargoutable.jsp		//it's a form		
+							  =>form:cargo_id,outime,outerid,
+							  		 checkerid			
+							  	=>cargoutservlet{action:cargout.do}			=>	cargout
+							  	(success=>url:successout.jsp=>admin.jsp)
+							  	(failed =>url:failedout.jsp =>admin.jsp)
+
+							watchwarehouse.jsp				<=	warehousestate//it's a table		warehousestate
+
+							(search.jsp)
+								searchcargo.jsp	//it's a form
+								  =>form:trackingno||
+								  		 $nof(area,row,shelf,seat,state)		
+								  	=>searchcargoservlet{action:searchcargo.do}	<=	cargorecord
+								  								cargomoving
+								  	  	=>searchcargoresult.jsp//it's a table			//		view vcargo	货物记录[货物转移记录]
+								  		  [1.searchcargo.table]
+
+								searchtable.jsp
+									case:intable.jsp		<=	cargoin 						view vcargoin 入库单记录
+									case:outable.jsp		<=	cargout 						cargout 出库单记录
+
+							building.jsp					=>	xls
+
+					case:checker.jsp
+							board.jsp						<=	[cargo]							view vreadycheck
+							cargogetable.jsp				=>	cargorecord//it's a form
+							  =>form:cargo_id,trackingno,
+							  		 checkerid,getime,kg,isintact,state,remark
+							  	=>cargoreadyservlet{action:cargoready.do}		=>	cargorecord
+							  	(success=>url:readysuccess.jsp=>checker.jsp)
+							  	(failed =>url:readyfailed.jsp =>checker.jsp)
+
+							updatecargotable.jsp			=>	cargorecord//it's a form
+							  =>form:cargo_id,movtime,moverid,oldarea,oldrow,oldshelf,oldseat,
+							  		 newarea,newrow,newshelf,newseat
+
+							  	=>cargomovservlet{action:cargomov.do}			=>	cargomoving
