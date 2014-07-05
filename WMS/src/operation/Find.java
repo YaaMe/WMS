@@ -1,21 +1,23 @@
 package operation;
 
 import java.util.List;
-
-public class Find implements I_Find{
-	I_Find find=null;
+//maintenance of Find operation
+public class Find<T> implements I_Find<T>{
+	I_Find<T> find=null;
 	public Find(String type){
 		switch(type.toLowerCase().hashCode()){
-		case 3599307 :find=new FindUser();break;
+		case 3599307 :find=new FindUser();break;//user
+		case 94431164:find=new FindCargo();break;//cargo
+		case 13683630:find=new FindWarehouseState();break;//warehousestate
 		}
 	}
-	public Object findById(Object id) {
+	public T findById(Object id) {
 		return find.findById(id);
 	}
-	public List findBycolumn(String column,Object value) {
+	public List<T> findBycolumn(String column,Object value) {
 		return find.findBycolumn(column,value);
 	}
-	public List findAll() {
+	public List<T> findAll() {
 		return find.findAll();
 	}
 }

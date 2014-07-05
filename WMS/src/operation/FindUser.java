@@ -4,17 +4,17 @@ import java.util.List;
 
 import database.User;
 import database.UserDAO;
-public class FindUser implements I_Find{
-	User user=null;
+
+//To focus the user
+public class FindUser<T> implements I_Find<User>{
 	UserDAO udao=new UserDAO();
 
-	public Object findById(Object id) {
-		user=udao.findById(id+"");
-		return user;
+	public User findById(Object id) {
+		return udao.findById(id+"");
 	}
 
-	public List findBycolumn(String column,Object value) {
-		List users=null;
+	public List<User> findBycolumn(String column,Object value) {
+		List<User> users=null;
 		switch(column.toLowerCase().hashCode()){
 		case 3373707:users=udao.findByUName(value);break;//name
 		case 3575610:users=udao.findByUType(value);break;//type
@@ -23,7 +23,7 @@ public class FindUser implements I_Find{
 		return users;
 	}
 
-	public List findAll() {
+	public List<User> findAll() {
 		return udao.findAll();
 	}
 	

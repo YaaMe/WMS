@@ -4,18 +4,20 @@ import java.util.List;
 
 import database.*;
 
-public class FindCargo implements I_Find{
-	Cargo cargo=null;
+public class FindCargo<T> implements I_Find<Cargo>{
 	CargoDAO cdao=new CargoDAO();
-	public List findAll() {
-		return null;
+	public List<Cargo> findAll() {
+		return cdao.findAll();
 	}
-	public Object findById(Object id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Cargo findById(Object id) {
+		return cdao.findById(id+"");
 	}
-	public List findBycolumn(String column, Object value) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Cargo> findBycolumn(String column, Object value) {
+		List<Cargo> cargos=null;
+		switch(column.toLowerCase().hashCode()){
+		case -1008619738:cargos=cdao.findByCargoOrigin(value);break;//origin
+		case -1429847026:cargos=cdao.findByCargoDestination(value);break;//destination
+		}
+		return cargos;
 	}
 }
