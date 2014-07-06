@@ -1,22 +1,32 @@
 package operation;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.SQLQuery;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 
 import database.*;
 
 public class Test {
-	public static void main(String[] args) {
-		RunSQL runner=new RunSQL();
-		//runner.run("");
-
-//		Find<Warehousestate> find=new Find<Warehousestate>("user");
+	public static void main(String[] args) throws SQLException {
+		
+//		String sql="select * from users;";
+//
+//				RunSQL runner=new RunSQL();
+//		List<Viewer> data=runner.selectSQL(sql);
+//		
+//		System.out.println("success:"+data.get(0).toString());
+		Find<Viewer> find=new Find<Viewer>("users");
+		List<Viewer> da=find.findBycolumn("u_id", "00120110327");
+		System.out.println(da.get(0).getColumn(3));
+//		Find<User> find=new Find<User>("user");
 //		User user=find.findById("00120110327");
 //		List<User> users=find.findAll();
+//		System.out.print(user.getUName());
 //		Test test=new Test();
 //		System.out.println(test.SQL('B', 2, 3, 4, 20));
 //		System.out.println("warehousestate".hashCode());

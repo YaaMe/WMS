@@ -9,6 +9,7 @@ public class Find<T> implements I_Find<T>{
 		case 3599307 :find=new FindUser();break;//user
 		case 94431164:find=new FindCargo();break;//cargo
 		case 13683630:find=new FindWarehouseState();break;//warehousestate
+		default:find=new FindView(type.toLowerCase());break;
 		}
 	}
 	public T findById(Object id) {

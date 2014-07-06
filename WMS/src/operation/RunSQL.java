@@ -1,11 +1,15 @@
 package operation;
 
 import java.sql.*;
+import java.util.*;
 
+import database.Viewer;
+
+//running sql by jdbc,return in List
 public class RunSQL {
 	String name="YaaMe",
 		   password="qclis235791468",
-		   jdbc="jdbc:sqlserver://localhost:1433;",
+		   jdbc="jdbc:sqlserver://localhost:1433;DatabaseName=WMS",
 		   driver="com.microsoft.sqlserver.jdbc.SQLServerDriver";
 	public RunSQL(){}
 	public RunSQL(String name,String password){
@@ -15,15 +19,24 @@ public class RunSQL {
 		this.driver=driver;this.jdbc=jdbc;this.name=name;this.password=password;
 	}
 	
-	public ResultSet selectSQL(String sql){
+	public List<Viewer> selectSQL(String sql){
 		Connection con = null;  
         Statement stmt = null;  
         ResultSet rs = null;
+        Viewer entity;
+        List<Viewer> data=new ArrayList<Viewer>();
         try {  
             Class.forName(driver);  
             con = DriverManager.getConnection(jdbc, name,password);  
-            stmt = con.createStatement();
+            stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
             rs=stmt.executeQuery(sql);
+            entity=new Viewer(rs.getMetaData().getColumnCount());
+		    while(rs.next()){
+		    	for(int i=0;i<rs.getMetaData().getColumnCount();i++){
+		    		entity.setColumn(i,rs.getString(i+1));
+	            }
+		    	data.add(entity);
+		    }
         } catch (ClassNotFoundException e) {  
             e.printStackTrace();  
         } catch (SQLException s) {  
@@ -46,7 +59,7 @@ public class RunSQL {
                 se.printStackTrace();  
             }
         }
-        return rs;
+        return data;
 	}
 	public int insertSQL(String sql){
 		Connection con = null;  
@@ -58,7 +71,6 @@ public class RunSQL {
             con = DriverManager.getConnection(jdbc, name,password);  
             stmt = con.createStatement();
             num=stmt.executeUpdate(sql);
-//           stmt.executeUpdate(sql);  
         } catch (ClassNotFoundException e) {  
             e.printStackTrace();  
         } catch (SQLException s) {  
