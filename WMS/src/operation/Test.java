@@ -52,7 +52,7 @@ public class Test {
 		
 //		Test test=new Test();
 //		System.out.println(test.SQL('B', 2, 3, 4, 20));
-		System.out.println("cargo_out".hashCode());
+		System.out.println("cargo_mov".hashCode());
 //		System.out.println("cargo".hashCode());
 	}
 	public String SQL(char b,int alimit,int rows,int shelfs,int seats){

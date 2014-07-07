@@ -2,7 +2,7 @@ package operation;
 
 import java.util.List;
 import database.*;
-public class FindCargoMoving implements I_Find<Cargomoving>{
+public class FindCargoMoving<T> implements I_Find<Cargomoving>{
 	Cargomoving cmov=null;
 	CargomovingDAO cmovdao=new CargomovingDAO();
 	public List<Cargomoving> findAll() {
@@ -19,7 +19,7 @@ public class FindCargoMoving implements I_Find<Cargomoving>{
 		}
 		return cmovs;
 	}
-	public List<Viewer> findBycolumns(String[] columns, String[] values) {
+	public List<Viewer> findBycolumns(List<String> columns, List<String> values) {
 		RunSQL runsql=new RunSQL();
 		GetSQL getsql=new GetSQL("cargomoving");
 		String sql=getsql.columnsLimit(columns, values);

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import database.Cargo;
 import database.Cargoin;
+import database.Cargomoving;
 import database.Cargorecord;
 import database.Viewer;
 
@@ -84,19 +85,33 @@ public class Searchcargoservlet extends HttpServlet {
 			   seat=""+request.getParameter("seat"),
 			   state=""+request.getParameter("state");
 
-		if(trackingno.equals("null")){
+		if(!trackingno.equals("null")){
 			Find<Cargoin> findcargos=new Find<Cargoin>("cargo_in");
 			List<Cargoin> cargos=findcargos.findBycolumn("cargo_trackingno", trackingno);
+			Find<Viewer> findnew=new Find<Viewer>("vw_cargonewstate");
+			Find<Viewer> findold=new Find<Viewer>("vw_cargoldstate");
 			for(int i=0;i<cargos.size();i++){
 				Find <Cargorecord> findrecord=new Find<Cargorecord>("cargo_record");
 				Cargorecord record=findrecord.findById(cargos.get(i).getCargoId());
-			Find<Viewer> find1=new Find<Viewer>("vw_cargonewstate");
-			List<Viewer> data=find1.findBycolumn("货物单号", trackingno);
-//			for(int i=0;i<data.size();i++){
-//				if(data.get(i).getColumn(13).equals("在库")){
-//					//////////////////////////////////////
-//				}
-//			}
+				if(record.getCargoState().equals("在库")){
+					List<Viewer> newdata=findnew.findBycolumn("货物编号", record.getCargoId());
+					//////////////////////////////
+					//                          //
+					//////////////////////////////
+				}
+				else{
+					List<Viewer> oldata=findold.findBycolumn("货物编号",record.getCargoId());
+					//////////////////////////////
+					//                          //
+					//////////////////////////////
+				}
+				if(record.getCargoBemoved()==1){
+					Find<Cargomoving> findmov=new Find<Cargomoving>("cargo_mov");
+					List<Cargomoving> movdata=findmov.findBycolumn("cargo_id",record.getCargoId());
+					//////////////////////////////
+					//                          //
+					//////////////////////////////
+				}
 			}
 		}
 		else{
@@ -108,8 +123,11 @@ public class Searchcargoservlet extends HttpServlet {
 			if(!seat.equals("null")){columns.add("位");values.add(seat);}
 			if(!state.equals("null")){columns.add("状态");values.add(state);}
 			
-			Find<Viewer> find2=new Find<Viewer>("vw_cargo")
-			
+			Find<Cargorecord> find=new Find<Cargorecord>("cargo_record");
+			List<Viewer> data=find.findBycolumns(columns,values);
+			////////////////////////////
+			//                        //
+			////////////////////////////
 		}
 		
 	}

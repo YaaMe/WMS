@@ -28,7 +28,7 @@ public class FindUser<T> implements I_Find<User>{
 		return udao.findAll();
 	}
 
-	public List<Viewer> findBycolumns(String[] columns, String[] values) {//通过多列来查找
+	public List<Viewer> findBycolumns(List<String> columns, List<String> values) {//通过多列来查找
 		RunSQL runsql=new RunSQL();
 		GetSQL getsql=new GetSQL("users");//传递表格名称users
 		String sql=getsql.columnsLimit(columns, values);

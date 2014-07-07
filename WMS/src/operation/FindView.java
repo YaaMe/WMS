@@ -26,7 +26,7 @@ public class FindView<T> implements I_Find<Viewer> {
 		sql="select * from "+table+" where "+column+"='"+value+"';";
 		return runsql.selectSQL(sql);
 	}
-	public List<Viewer> findBycolumns(String[] columns, String[] values) {
+	public List<Viewer> findBycolumns(List<String> columns,List<String> values) {
 		RunSQL runsql=new RunSQL();
 		GetSQL getsql=new GetSQL(table);
 		String sql=getsql.columnsLimit(columns, values);
