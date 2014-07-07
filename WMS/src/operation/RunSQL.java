@@ -19,20 +19,24 @@ public class RunSQL {
 		this.driver=driver;this.jdbc=jdbc;this.name=name;this.password=password;
 	}
 	
-	public List<Viewer> selectSQL(String sql){
+	public List<Viewer> selectSQL(String sql){//通过传递sql语句作为参数进行查询
 		Connection con = null;  
         Statement stmt = null;  
         ResultSet rs = null;
-        Viewer entity;
-        List<Viewer> data=new ArrayList<Viewer>();
+        Viewer entity;//Viewer的实体
+        List<Viewer> data=new ArrayList<Viewer>();//List是一个接口，没法new；ArrayList则是一个类
         try {  
             Class.forName(driver);  
             con = DriverManager.getConnection(jdbc, name,password);  
             stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
             rs=stmt.executeQuery(sql);
-            entity=new Viewer(rs.getMetaData().getColumnCount());
 		    while(rs.next()){
-		    	for(int i=0;i<rs.getMetaData().getColumnCount();i++){
+		    	int counts=rs.getMetaData().getColumnCount();
+		    	String[] columnames=new String[counts];
+		    	for(int i=0;i<counts;i++)
+		    		columnames[i]=rs.getMetaData().getColumnName(i+1);
+		    	entity=new Viewer(counts,columnames);//获取表格中列的标题名称的列数
+		    	for(int i=0;i<counts;i++){
 		    		entity.setColumn(i,rs.getString(i+1));
 	            }
 		    	data.add(entity);
@@ -61,7 +65,7 @@ public class RunSQL {
         }
         return data;
 	}
-	public int insertSQL(String sql){
+	public int insertSQL(String sql){//以sql语句为参数进行插入操作
 		Connection con = null;  
         Statement stmt = null;  
         ResultSet rs = null;

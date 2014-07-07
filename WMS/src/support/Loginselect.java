@@ -1,4 +1,4 @@
-package jspselector;
+package support;
 
 import database.User;
 import operation.Find;
@@ -6,7 +6,7 @@ import operation.Find;
 //select next JSP after login
 public class Loginselect {
 	String jsp="login.jsp";
-	Find find=new Find("user");
+	Find<User> find=new Find<User>("user");
 	User user=null;
 	public Loginselect(String id){
 		user=(User) find.findById(id);

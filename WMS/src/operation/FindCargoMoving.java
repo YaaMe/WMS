@@ -19,5 +19,11 @@ public class FindCargoMoving implements I_Find<Cargomoving>{
 		}
 		return cmovs;
 	}
+	public List<Viewer> findBycolumns(String[] columns, String[] values) {
+		RunSQL runsql=new RunSQL();
+		GetSQL getsql=new GetSQL("cargomoving");
+		String sql=getsql.columnsLimit(columns, values);
+		return runsql.selectSQL(sql);
+	}
 
 }

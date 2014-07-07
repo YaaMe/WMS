@@ -20,4 +20,10 @@ public class FindCargo<T> implements I_Find<Cargo>{
 		}
 		return cargos;
 	}
+	public List<Viewer> findBycolumns(String[] columns,String[] values){
+		RunSQL runsql=new RunSQL();
+		GetSQL getsql=new GetSQL("cargo");
+		String sql=getsql.columnsLimit(columns, values);
+		return runsql.selectSQL(sql);
+	}
 }

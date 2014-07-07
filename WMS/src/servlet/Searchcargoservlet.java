@@ -2,11 +2,20 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import database.Cargo;
+import database.Cargoin;
+import database.Cargorecord;
+import database.Viewer;
+
+import operation.Find;
 
 public class Searchcargoservlet extends HttpServlet {
 
@@ -68,19 +77,41 @@ public class Searchcargoservlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
-		out
-				.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
-		out.println("<HTML>");
-		out.println("  <HEAD><TITLE>A Servlet</TITLE></HEAD>");
-		out.println("  <BODY>");
-		out.print("    This is ");
-		out.print(this.getClass());
-		out.println(", using the POST method");
-		out.println("  </BODY>");
-		out.println("</HTML>");
-		out.flush();
-		out.close();
+		String trackingno=""+request.getParameter("trackingno"),
+			   area=""+request.getParameter("area"),
+			   row=""+request.getParameter("row"),
+			   shelf=""+request.getParameter("shelf"),
+			   seat=""+request.getParameter("seat"),
+			   state=""+request.getParameter("state");
+
+		if(trackingno.equals("null")){
+			Find<Cargoin> findcargos=new Find<Cargoin>("cargo_in");
+			List<Cargoin> cargos=findcargos.findBycolumn("cargo_trackingno", trackingno);
+			for(int i=0;i<cargos.size();i++){
+				Find <Cargorecord> findrecord=new Find<Cargorecord>("cargo_record");
+				Cargorecord record=findrecord.findById(cargos.get(i).getCargoId());
+			Find<Viewer> find1=new Find<Viewer>("vw_cargonewstate");
+			List<Viewer> data=find1.findBycolumn("货物单号", trackingno);
+//			for(int i=0;i<data.size();i++){
+//				if(data.get(i).getColumn(13).equals("在库")){
+//					//////////////////////////////////////
+//				}
+//			}
+			}
+		}
+		else{
+			List<String> columns=new ArrayList<String>();
+			List<String> values=new ArrayList<String>();
+			if(!area.equals("null")){columns.add("区");values.add(area);}
+			if(!row.equals("null")){columns.add("排");values.add(row);}
+			if(!shelf.equals("null")){columns.add("架");values.add(shelf);}
+			if(!seat.equals("null")){columns.add("位");values.add(seat);}
+			if(!state.equals("null")){columns.add("状态");values.add(state);}
+			
+			Find<Viewer> find2=new Find<Viewer>("vw_cargo")
+			
+		}
+		
 	}
 
 	/**

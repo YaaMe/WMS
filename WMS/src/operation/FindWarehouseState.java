@@ -3,6 +3,7 @@ package operation;
 import java.util.List;
 
 import database.Cargomoving;
+import database.Viewer;
 import database.Warehousestate;
 import database.WarehousestateDAO;
 import database.WarehousestateId;
@@ -25,6 +26,13 @@ public class FindWarehouseState<T> implements I_Find<Warehousestate>{
 		case 554038743:houses=house.findByCargoId(value);break;//cargoid
 		}
 		return houses;
+	}
+
+	public List<Viewer> findBycolumns(String[] columns, String[] values) {
+		RunSQL runsql=new RunSQL();
+		GetSQL getsql=new GetSQL("warehousestate");
+		String sql=getsql.columnsLimit(columns, values);
+		return runsql.selectSQL(sql);
 	}
 
 }

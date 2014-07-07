@@ -23,7 +23,13 @@ public class FindView<T> implements I_Find<Viewer> {
 	}
 
 	public List<Viewer> findBycolumn(String column, Object value) {
-		sql="select * from "+table+" where "+column+"="+value+";";
+		sql="select * from "+table+" where "+column+"='"+value+"';";
+		return runsql.selectSQL(sql);
+	}
+	public List<Viewer> findBycolumns(String[] columns, String[] values) {
+		RunSQL runsql=new RunSQL();
+		GetSQL getsql=new GetSQL(table);
+		String sql=getsql.columnsLimit(columns, values);
 		return runsql.selectSQL(sql);
 	}
 
