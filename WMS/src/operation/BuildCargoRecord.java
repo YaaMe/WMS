@@ -3,7 +3,7 @@ package operation;
 import java.util.List;
 
 import database.Viewer;
-
+//create cargorecord xls
 public class BuildCargoRecord implements I_Build{
 	public void buildXLS(String tablename) {
 		CreateXLS create=new CreateXLS(tablename);

@@ -18,15 +18,19 @@ public class Find<T> implements I_Find<T>{
 		default:find=new FindView(type.toLowerCase());break;
 		}
 	}
+	//find by id,Object is ready for unique id
 	public T findById(Object id) {
 		return find.findById(id);
 	}
+	//find by one of some column
 	public List<T> findBycolumn(String column,Object value) {
 		return find.findBycolumn(column,value);
 	}
+	//get all
 	public List<T> findAll() {
 		return find.findAll();
 	}
+	//unique limit
 	public List<Viewer> findBycolumns(List<String> columns, List<String> values) {
 		return find.findBycolumns(columns, values);
 	}

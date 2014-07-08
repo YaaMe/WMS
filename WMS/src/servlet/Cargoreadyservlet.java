@@ -81,7 +81,7 @@ public class Cargoreadyservlet extends HttpServlet {
 		Timestamp ts=Timestamp.valueOf(df2.format(now));
 		String time=df.format(now);
 		String trackingno=request.getParameter("trackingno"),
-			   checkerid=request.getParameter("checkerid"),
+			   checkerid=request.getParameter("username"),
 			   kg=request.getParameter("kg"),
 			   isintact=request.getParameter("isintact"),
 			   state="´ýÈë",

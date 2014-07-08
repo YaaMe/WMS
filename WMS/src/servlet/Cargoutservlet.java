@@ -79,7 +79,6 @@ public class Cargoutservlet extends HttpServlet {
 		Timestamp ts=Timestamp.valueOf(df.format(now));
 		
 		String cargo_id=request.getParameter("cargo_id"),
-			   outime,
 			   outerid=request.getParameter("outerid"),
 			   checkerid=request.getParameter("checkerid");
 		
@@ -89,6 +88,7 @@ public class Cargoutservlet extends HttpServlet {
 		cargo.setCargoId(cargo_id);
 		cargo.setCargoOuterid(outerid);
 		cargo.setCargoOutime(ts);
+		cdao.save(cargo);
 		
 	}
 

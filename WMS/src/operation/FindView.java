@@ -3,6 +3,9 @@ package operation;
 import java.util.ArrayList;
 import java.util.List;
 
+import support.GetSQL;
+import support.RunSQL;
+
 import database.Viewer;
 
 //To get data of view or some table;

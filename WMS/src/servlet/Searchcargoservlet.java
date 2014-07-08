@@ -84,27 +84,33 @@ public class Searchcargoservlet extends HttpServlet {
 			   shelf=""+request.getParameter("shelf"),
 			   seat=""+request.getParameter("seat"),
 			   state=""+request.getParameter("state");
-
+		//Make sure user want to find by trackingno or location messenage
 		if(!trackingno.equals("null")){
+			//if user want to follow some of cargo
+			//find all of the cargo_trackingno record,maybe still here,maybe back
 			Find<Cargoin> findcargos=new Find<Cargoin>("cargo_in");
 			List<Cargoin> cargos=findcargos.findBycolumn("cargo_trackingno", trackingno);
 			Find<Viewer> findnew=new Find<Viewer>("vw_cargonewstate");
 			Find<Viewer> findold=new Find<Viewer>("vw_cargoldstate");
 			for(int i=0;i<cargos.size();i++){
+				//find every cargo_id of this trackingno(maybe back,or send twice,stc)
 				Find <Cargorecord> findrecord=new Find<Cargorecord>("cargo_record");
 				Cargorecord record=findrecord.findById(cargos.get(i).getCargoId());
+				//if cargo still here,it will exists without cargout table
 				if(record.getCargoState().equals("在库")){
 					List<Viewer> newdata=findnew.findBycolumn("货物编号", record.getCargoId());
 					//////////////////////////////
 					//                          //
 					//////////////////////////////
 				}
+				//and else,user maybe want to get the cargout table information
 				else{
 					List<Viewer> oldata=findold.findBycolumn("货物编号",record.getCargoId());
 					//////////////////////////////
 					//                          //
 					//////////////////////////////
 				}
+				//if the cargo be moved in this warehouse,maybe user want to get the moving information
 				if(record.getCargoBemoved()==1){
 					Find<Cargomoving> findmov=new Find<Cargomoving>("cargo_mov");
 					List<Cargomoving> movdata=findmov.findBycolumn("cargo_id",record.getCargoId());
@@ -114,9 +120,11 @@ public class Searchcargoservlet extends HttpServlet {
 				}
 			}
 		}
+		//find everything is or was here
 		else{
 			List<String> columns=new ArrayList<String>();
 			List<String> values=new ArrayList<String>();
+			//focus the limit
 			if(!area.equals("null")){columns.add("区");values.add(area);}
 			if(!row.equals("null")){columns.add("排");values.add(row);}
 			if(!shelf.equals("null")){columns.add("架");values.add(shelf);}

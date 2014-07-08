@@ -2,28 +2,31 @@ package operation;
 
 import java.util.List;
 
+import support.GetSQL;
+import support.RunSQL;
+
 import database.Cargoin;
 import database.Cargout;
 import database.CargoutDAO;
 import database.Viewer;
-
+//To find table cargout
 public class FindCargout<T> implements I_Find<Cargout>{
-	CargoutDAO cdao=new CargoutDAO();
+	RunSQL runsql=new RunSQL();
+	Turn turn=new Turn();
+	String sql="";
 	public List<Cargout> findAll() {
-		return cdao.findAll();
+		sql="select * from cargout;";
+		return turn.turnToCargout(runsql.selectSQL(sql));
 	}
 
 	public Cargout findById(Object id) {
-		return cdao.findById(id+"");
+		sql="select * from cargout where cargo_id="+id+";";
+		return turn.turnToCargout(runsql.selectSQL(sql).get(0));
 	}
 
 	public List<Cargout> findBycolumn(String column, Object value) {
-		List<Cargout> cargos=null;
-		switch(column.toLowerCase().hashCode()){
-		case 1168988856:cargos=cdao.findByCargoOuterid(value);break;//outerid
-		case 399098768:cargos=cdao.findByCargoCheckerid(value);break;//checkerid
-		}
-		return cargos;
+		sql="select * from cargout where "+column+"="+value+";";
+		return turn.turnToCargout(runsql.selectSQL(sql));
 	}
 
 	public List<Viewer> findBycolumns(List<String> columns, List<String> values) {

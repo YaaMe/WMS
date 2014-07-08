@@ -2,26 +2,28 @@ package operation;
 
 import java.util.List;
 
-import database.*;
+import support.GetSQL;
+import support.RunSQL;
 
+import database.*;
+//To find tble Cargo
 public class FindCargo<T> implements I_Find<Cargo>{
-	CargoDAO cdao=new CargoDAO();
+	RunSQL runsql=new RunSQL();
+	Turn turn=new Turn();
+	String sql="";
 	public List<Cargo> findAll() {
-		return cdao.findAll();
+		sql="select * from cargo;";
+		return turn.turnToCargo(runsql.selectSQL(sql));
 	}
 	public Cargo findById(Object id) {
-		return cdao.findById(id+"");
+		sql="select * from cargo where cargo_trackingno="+id+";";
+		return turn.turnToCargo(runsql.selectSQL(sql).get(0));
 	}
 	public List<Cargo> findBycolumn(String column, Object value) {
-		List<Cargo> cargos=null;
-		switch(column.toLowerCase().hashCode()){
-		case -1008619738:cargos=cdao.findByCargoOrigin(value);break;//origin
-		case -1429847026:cargos=cdao.findByCargoDestination(value);break;//destination
-		}
-		return cargos;
+		sql="select * from cargo where "+column+"="+value+";";
+		return turn.turnToCargo(runsql.selectSQL(sql));
 	}
 	public List<Viewer> findBycolumns(List<String> columns,List<String> values){
-		RunSQL runsql=new RunSQL();
 		GetSQL getsql=new GetSQL("cargo");
 		String sql=getsql.columnsLimit(columns, values);
 		return runsql.selectSQL(sql);

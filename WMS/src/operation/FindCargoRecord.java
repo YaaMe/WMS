@@ -2,36 +2,35 @@ package operation;
 
 import java.util.List;
 
+import support.GetSQL;
+import support.RunSQL;
+
 import database.Cargo;
+import database.Cargomoving;
 import database.Cargorecord;
 import database.CargorecordDAO;
 import database.Viewer;
-
+//To find table cargorecord
 public class FindCargoRecord<T> implements I_Find<Cargorecord>{
-	CargorecordDAO cdao=new CargorecordDAO();
+	RunSQL runsql=new RunSQL();
+	Turn turn=new Turn();
+	String sql="";
 	public List<Cargorecord> findAll() {
-		return cdao.findAll();
+		sql="select * from cargorecord;";
+		return turn.turnToCargorecord(runsql.selectSQL(sql));
 	}
 
 	public Cargorecord findById(Object id) {
-		return cdao.findById(id+"");
+		sql="select * from cargorecord where cargo_id="+id+";";
+		return turn.turnToCargorecord(runsql.selectSQL(sql).get(0));
 	}
 
 	public List<Cargorecord> findBycolumn(String column, Object value) {
-		List<Cargorecord> records=null;
-		switch(column.toLowerCase().hashCode()){
-		case 3002509:records=cdao.findByCargoArea(value);break;//area
-		case 113114:records=cdao.findByCargoRow(value);break;//row
-		case 109403690:records=cdao.findByCargoShelf(value);break;//shelf
-		case 3526149:records=cdao.findByCargoSeat(value);break;//seat
-		case -223321008:records=cdao.findByCargoBemoved(value);break;//bemoved
-		case 109757585:records=cdao.findByCargoState(value);break;//state
-		}
-		return records;
+		sql="select * from cargorecord where "+column+"="+value+";";
+		return turn.turnToCargorecord(runsql.selectSQL(sql));
 	}
 
 	public List<Viewer> findBycolumns(List<String> columns, List<String> values) {
-		RunSQL runsql=new RunSQL();
 		GetSQL getsql=new GetSQL("cargorecord");
 		String sql=getsql.columnsLimit(columns, values);
 		return runsql.selectSQL(sql);

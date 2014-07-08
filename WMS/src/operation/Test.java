@@ -1,18 +1,46 @@
 package operation;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import support.RunSQL;
+
 
 import database.*;
 
 public class Test {
 	public static void main(String[] args) throws SQLException {
+		String sql="select * from warehousestate;";
+		RunSQL runsql=new RunSQL();
+		List<Viewer> data=runsql.selectSQL(sql);
+		System.out.println(data.get(0).getColumnCounts());
+		System.out.println(data.get(0).getColumn(4).equals(""));
+	//	System.out.println(data.get(0).getColumn(i));
+		
+		
+//		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//		Date now=new Date();
+//		Timestamp time=Timestamp.valueOf(df.format(now));
+//		System.out.println(time);
+//		for(int i=0;i<4;i++)
+//			System.out.print("view.getColumn("+i+"),");
+//		RunSQL runsql=new RunSQL();
+//		String sql="select * from cargout;";
+//		List<Viewer> data=runsql.selectSQL(sql);
+//		System.out.println(data.get(0));
+//		Timestamp time=Timestamp.valueOf(data.get(0).getColumn(3));
+//		System.out.println(time);
+//		String[] values={"00220140209","123456","admin","Fiona","ÄÐ"};
+//		Viewer a=new Viewer(5, values);
+//		a.setColumn(0, values[0]);a.setColumn(1, values[1]);a.setColumn(2, values[2]);
+//		a.setColumn(3, values[3]);a.setColumn(4, values[4]);
 //		Find<Viewer> find = new Find<Viewer>("users");
 //		List<Viewer> list=find.findAll();
 //		System.out.println(list.get(0).getColumn(0));
@@ -52,7 +80,7 @@ public class Test {
 		
 //		Test test=new Test();
 //		System.out.println(test.SQL('B', 2, 3, 4, 20));
-		System.out.println("cargo_mov".hashCode());
+//		System.out.println("cargo_mov".hashCode());
 //		System.out.println("cargo".hashCode());
 	}
 	public String SQL(char b,int alimit,int rows,int shelfs,int seats){

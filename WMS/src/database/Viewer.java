@@ -1,6 +1,6 @@
 package database;
 
-//to be the entity of select SQL result
+//To be the entity of select SQL result
 public class Viewer {
 	String[] column;
 	String[] columname;

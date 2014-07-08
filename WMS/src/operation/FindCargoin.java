@@ -2,34 +2,31 @@ package operation;
 
 import java.util.List;
 
+import support.GetSQL;
+import support.RunSQL;
+
 import database.Cargo;
 import database.Cargoin;
 import database.CargoinDAO;
 import database.Viewer;
-
+//To find table cargoin
 public class FindCargoin<T> implements I_Find<Cargoin>{
-	CargoinDAO cdao=new CargoinDAO();
-
+	RunSQL runsql=new RunSQL();
+	Turn turn=new Turn();
+	String sql="";
 	public List<Cargoin> findAll() {
-		return cdao.findAll();
+		sql="select * from cargoin;";
+		return turn.turnToCargoin(runsql.selectSQL(sql));
 	}
-
 	public Cargoin findById(Object id) {
-		return cdao.findById(id+"");
+		sql="select * from cargoin where cargo_id="+id+";";
+		return turn.turnToCargoin(runsql.selectSQL(sql).get(0));
 	}
-
 	public List<Cargoin> findBycolumn(String column, Object value) {
-		List<Cargoin> cargos=null;
-		switch(column.toLowerCase().hashCode()){
-		case 1168988856:cargos=cdao.findByCargoTrackingno(value);break;//trackingno
-		case 399098768:cargos=cdao.findByCargoCheckerid(value);break;//checkerid
-		case -1184197331:cargos=cdao.findByCargoInerid(value);break;//inerid
-		}
-		return cargos;
+		sql="select * from cargoin where "+column+"="+value+";";
+		return turn.turnToCargoin(runsql.selectSQL(sql));
 	}
-
 	public List<Viewer> findBycolumns(List<String> columns, List<String> values) {
-		RunSQL runsql=new RunSQL();
 		GetSQL getsql=new GetSQL("cargoin");
 		String sql=getsql.columnsLimit(columns, values);
 		return runsql.selectSQL(sql);
