@@ -29,7 +29,7 @@ public class FindCargout<T> implements I_Find<Cargout>{
 		return turn.turnToCargout(runsql.selectSQL(sql));
 	}
 
-	public List<Viewer> findBycolumns(List<String> columns, List<String> values) {
+	public List<Viewer> findBycolumns(String[] columns, String[] values) {
 		RunSQL runsql=new RunSQL();
 		GetSQL getsql=new GetSQL("cargout");
 		String sql=getsql.columnsLimit(columns, values);
